@@ -181,6 +181,7 @@ st.markdown('<div class="scout-subtitle">AI-Powered Player Scouting Reports</div
 st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
 player_name = st.text_input("Player or Manager Name", placeholder="e.g. Erling Haaland, Virgil van Dijk, Pep Guardiola")
+force_fail = st.checkbox("🔧 Debug: force the first attempt to fail, to watch the retry loop fire")
 
 if st.button("Scout Player"):
     if not player_name.strip():
@@ -193,6 +194,9 @@ if st.button("Scout Player"):
                     "player_data": {},
                     "position_category": "",
                     "scouting_report": "",
+                    "retry_count": 0,          # starts at zero, check_quality increments it if it sends the report back
+                    "quality_feedback": "",    # starts empty, only gets filled in when something's wrong
+                    "debug_force_fail": force_fail,   # wired straight to the checkbox above
                 }
             )
 
